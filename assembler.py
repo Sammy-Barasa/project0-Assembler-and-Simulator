@@ -209,11 +209,11 @@ class Assembler():
 
 
 	def convert(self,lines):
-		# first run: get labels and line numbers store in dictionary, labels{}
+		# first run: comments, 
 		self.get_preprocessor_directives(lines)
 		self.remove_comments(lines)
 		
-		# second run: string to hex, comments, commas, remove spaces
+		# second run: string to hex, commas, remove spaces, get labels and line numbers store in dictionary, labels{}
 		
 		self.get_labels(lines)
 		self.remove_commas(lines)
