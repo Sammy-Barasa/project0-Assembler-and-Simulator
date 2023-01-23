@@ -1,5 +1,6 @@
 
 import os
+import re
 
 class Assembler():
 	BASE_DIR = "" # base directory
@@ -50,7 +51,7 @@ class Assembler():
 	def printLines(self,lines):
 		for i in range(0,len(lines)):
 			print(f"{i+1}:{lines[i]}")
-		
+		print(self.all_lines_info)
 		for i in range(0,len(lines)):   
 			start_val = self.all_lines_info[str(i)]["start"]
 			line_val = f"{start_val}: "
@@ -129,27 +130,29 @@ class Assembler():
 		start_addr = self.start_memory_location
 		end_addr = 0
 		lines_to_ignnore = list(self.preprocessor_commands.values())
-            # lines_to_ignnore =  [x for x in lines_to_ignnore]
-            # print("lines_to_ignnore",lines_to_ignnore)
-            
+
 		
 		for i in range(len(lines)):
-			if i in lines_to_ignnore:
-				continue
-			
+			# to help track the new lines being modified
 			if len(lines[i])==0:
 				continue
-
+			elif i in lines_to_ignnore:
+				continue
 			end_addr = start_addr+31
 			info = {"start":hex(start_addr), "end":hex(end_addr)}
 			self.all_lines_info[str(i)]= info
 			start_addr=end_addr+1
+			
 
 	def replace_labels_to_start_addresses(self):
 		# replace labels start address
+		print(self.all_lines_info)
 		for value,key in enumerate(self.labels):
-			print(self.all_lines_info[str(value)]["start"])
-			self.labels[key]=self.all_lines_info[str(value)]["start"]
+			# print(self.all_lines_info[svalue]["start"])
+			
+			print(self.labels)
+			self.labels[key]=self.all_lines_info[str((self.labels[key]))]["start"]
+			print(self.labels)
 
 	def process_string(self,lines):
 		# change string data values to hex
