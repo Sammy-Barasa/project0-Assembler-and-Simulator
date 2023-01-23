@@ -1,14 +1,16 @@
-![GitHub](https://img.shields.io/github/license/Sammy-Barasa/project0-Assembler-and-Simulator) ![GitHub contributors](https://img.shields.io/github/contributors/Sammy-Barasa/project0-Assembler-and-Simulator)
+# ![GitHub](https://img.shields.io/github/license/Sammy-Barasa/project0-Assembler-and-Simulator) ![GitHub contributors](https://img.shields.io/github/contributors/Sammy-Barasa/project0-Assembler-and-Simulator)
 
-# project0-Assembler-and-Simulator
-## **project0 PesaPal Challange 2023**. 
+## project0-Assembler-and-Simulator
 
-project0 is implementing an assembler following provided machine instruction set. The project has two parts
+# **project0 PesaPal Challange 2023**
+
+project0 is implementing an assembler following provided machine instruction set by PesaPal Careers Portal for Junior Developer . The project has two parts
+
 ### **1. Assembler**
 
 Has five registers and 64K of memory in a 32-bit address space, from ***0x00000000–0x0000FFFF***  
 
-Has five registers consist of three general purpose **(R1, R2, R3)**, program counter (instruction pointer) register **(PC)**, and a conditional register **(COND)**   
+Has five registers consist of three general purpose **(R1, R2, R3)**, program counter (instruction pointer) register **(PC)**, and a conditional register **(COND)**
 
 Each instruction is encoded in a half word (16 bits) in little endian *(stores the least-significant byte at the smallest address)*
 
@@ -44,7 +46,13 @@ Displays informatio of preprocessed assembly file. Preprocessing is the first st
 Specify the source file and destination file.
 
 ```sh
-python3 run.py make filename.txt filename.s/filename.obj
+python3 run.py make test.txt compiled.s
+```
+
+or
+
+```sh
+python3 run.py make test.txt compiled.obj
 ```
 
 ### **3. Run simulator to prosses byte code or obj file**
@@ -53,13 +61,13 @@ Coming soon.
 
 # Credits
 
-## Work by Sammy Barasa [(https://github.com/Sammy-Barasa/MIPS-Assembler)](https://github.com/Sammy-Barasa/MIPS-Assembler)
+### Work by Sammy Barasa [(https://github.com/Sammy-Barasa/MIPS-Assembler)](https://github.com/Sammy-Barasa/MIPS-Assembler)
 
 My refernce stems from some work I did earlier on a MIPS-Assembler [(https://github.com/Sammy-Barasa/MIPS-Assembler)](https://github.com/Sammy-Barasa/MIPS-Assembler) see details on this link.
 
 project0 features a unique instruction set, an improved program structure and documentation, a more efficient preprocessing stage, tests and a simulator.
 
-## The Art of Assembly Language, 2nd Edition by Randall Hyde
+### The Art of Assembly Language, 2nd Edition by Randall Hyde
 
 One of my fundamental learning material used for referencing and understanding the assembler. The Art of Assembly Language has provided a comprehensive, plain-English, and patient introduction to 32-bit x86 assembly for non-assembly programmers. Hyde's primary teaching tool, High Level Assembler (or HLA), incorporates many of the features found in high-level languages (like C, C++, and Java) to help you quickly grasp basic assembly concepts. HLA lets you write true low-level code while enjoying the benefits of high-level language programming.
 

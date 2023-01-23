@@ -30,7 +30,9 @@ class Assembler():
 	'inc':['0x0D'],
 	'dec':['0x0E']
 	} # operation code table
-	
+	compiled_lines =[]
+
+
 	def __init__(self,base_dir):
 		self.BASE_DIR =base_dir
 		
@@ -62,7 +64,7 @@ class Assembler():
 				
 			self.all_lines[i] = line_val
 			
-		with open('output.txt', 'w', encoding='utf-8') as f:
+		with open('preprocessed.txt', 'w', encoding='utf-8') as f:
 			f.writelines(f"{l}\n" for l in lines)    
 			
 		print("ASSEMBLY FILE INFORMATION")
@@ -217,7 +219,7 @@ class Assembler():
 		return replace_with
 
 
-	def convert(self,lines):
+	def preprocess(self,lines):
 		# first run: comments, 
 		# self.get_preprocessor_directives(lines)
 		self.remove_comments(lines)
@@ -237,4 +239,38 @@ class Assembler():
 		self.replace_labels_to_start_addresses()
 		
 
+	def compile(self,file2):
+		'''
+			change to 4 bit byte code
+		'''
 		
+		lines = self.all_lines
+		for i in range(0,len(lines)):   
+			start_val = self.all_lines_info[str(i)]["start"]
+			line_compiled = f"{start_val}"
+			# replace label with label memory address
+			for j in range(0,len(lines[i])):
+				seg = lines[i][j]
+				if seg in self.labels.keys():
+					lines[i][j] = self.labels[seg]
+				
+			# replace label with label memory address
+			for j in range(0,len(lines[i])):
+				code = lines[i][j]
+				if code in self.opcode_table.keys():
+					lines[i][j] = self.opcode_table[code][0]
+			for j in range(0,len(lines[i])):
+				code = lines[i][j]
+				line_compiled = line_compiled +" "+code
+
+			# self.compiled_lines[i][:] = line_compiled
+		
+		print(lines)	
+		with open(file2, 'w', encoding='utf-8') as f1:
+			current_line=f""
+			for l in range(len(lines)):
+				for j in range(len(lines[l])):
+					current_line = current_line+" "+str(lines[l][j])
+			
+				f1.write(f"{current_line}\n")
+				current_line=f""
