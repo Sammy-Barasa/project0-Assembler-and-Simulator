@@ -105,13 +105,35 @@ class Assembler():
 					lines[i] = label_part
     
 	def remove_comments(self,lines):
+		'''comments are two types
+		   after code line: li,R1, R2 ;type1
+		   line comment: 
+
+		   ; this comment above source code, type2
+		   li,R1, R2
+		'''
 		# removing comments from source code
 		for i in range(0,len(lines)):
 			lines[i].strip()
 			line = lines[i].find(self.char_comment)
 			if (line != -1):
 				line_splt=lines[i].split(self.char_comment)
-				lines[i]=line_splt[0] # maintain part before comment character
+				lines[i]=line_splt[0].strip() # maintain part before comment character
+		
+		has_line_comment = True
+		while has_line_comment:
+			line_sizes =[]
+			for i in range(0,len(lines)):
+				line_sizes.append(len(lines[i]))
+			print("line sizes: ",line_sizes)
+			try:
+				indx =line_sizes.index(0) # since the initial part will have length 0
+				del lines[indx]
+			except:
+				has_line_comment = False
+				break
+		
+		
 
 	def remove_commas(self,lines):
 		# remove commas from source code
@@ -151,7 +173,7 @@ class Assembler():
 			# print(self.all_lines_info[svalue]["start"])
 			
 			print(self.labels)
-			self.labels[key]=self.all_lines_info[str((self.labels[key]))]["start"]
+			self.labels[key]=self.all_lines_info[str((self.labels[self.all_lines_info[key]["start"]]))]["start"]
 			print(self.labels)
 
 	def process_string(self,lines):
@@ -189,13 +211,17 @@ class Assembler():
 	def convert(self,lines):
 		# first run: get labels and line numbers store in dictionary, labels{}
 		self.get_preprocessor_directives(lines)
-		self.get_labels(lines)
+		self.remove_comments(lines)
 		
 		# second run: string to hex, comments, commas, remove spaces
-		self.remove_comments(lines)
+		
+		self.get_labels(lines)
 		self.remove_commas(lines)
+		print(self.all_lines)
 		self.remove_spaces(lines)
+		print(self.all_lines)
 		self.update_line_information(lines)
+		print(self.all_lines)
 		# self.replace_labels_to_start_addresses()
 		# third run: change instructions to hex, everything to 4 bytes
 
