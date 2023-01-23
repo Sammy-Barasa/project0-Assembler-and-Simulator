@@ -52,6 +52,7 @@ class Assembler():
 		for i in range(0,len(lines)):
 			print(f"{i+1}:{lines[i]}")
 		print(self.all_lines_info)
+		print(self.all_lines)
 		for i in range(0,len(lines)):   
 			start_val = self.all_lines_info[str(i)]["start"]
 			line_val = f"{start_val}: "
@@ -151,30 +152,38 @@ class Assembler():
 		# update line info: {"0":[start_addres,end_address]}
 		start_addr = self.start_memory_location
 		end_addr = 0
-		lines_to_ignnore = list(self.preprocessor_commands.values())
+		# lines_to_ignnore = list(self.preprocessor_commands.values())
 
+		# not_updated = True
 		
-		for i in range(len(lines)):
+		# while not_updated:
+		for i in range(0,len(lines)):
 			# to help track the new lines being modified
-			if len(lines[i])==0:
-				continue
-			elif i in lines_to_ignnore:
-				continue
+
 			end_addr = start_addr+31
 			info = {"start":hex(start_addr), "end":hex(end_addr)}
 			self.all_lines_info[str(i)]= info
 			start_addr=end_addr+1
-			
+		
+			# not_updated = False
+
+
 
 	def replace_labels_to_start_addresses(self):
-		# replace labels start address
+		# replace labels start address of the next line
 		print(self.all_lines_info)
-		for value,key in enumerate(self.labels):
-			# print(self.all_lines_info[svalue]["start"])
+		for i,key in enumerate(self.labels):
+			# print(self.labels)
+			# print("key: ",key)
+			label = key
+			label_value = self.labels[label]
+
+			self.labels[key]=self.all_lines_info[str(self.labels[key])]["start"]
+			print(self.labels)
+
+			# delete the lable line at i
+			del self.all_lines[label_value]
 			
-			print(self.labels)
-			self.labels[key]=self.all_lines_info[str((self.labels[self.all_lines_info[key]["start"]]))]["start"]
-			print(self.labels)
 
 	def process_string(self,lines):
 		# change string data values to hex
@@ -210,22 +219,24 @@ class Assembler():
 
 	def convert(self,lines):
 		# first run: comments, 
-		self.get_preprocessor_directives(lines)
+		# self.get_preprocessor_directives(lines)
 		self.remove_comments(lines)
 		
 		# second run: string to hex, commas, remove spaces, get labels and line numbers store in dictionary, labels{}
 		
 		self.get_labels(lines)
 		self.remove_commas(lines)
-		print(self.all_lines)
 		self.remove_spaces(lines)
-		print(self.all_lines)
+		
 		self.update_line_information(lines)
-		print(self.all_lines)
+		
 		# self.replace_labels_to_start_addresses()
 		# third run: change instructions to hex, everything to 4 bytes
-
+		print("Before")
+		print(self.all_lines)
 		# start with labels to  hex
 		self.replace_labels_to_start_addresses()
+		print("after")
+		print(self.all_lines)
 
 		
