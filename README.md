@@ -23,11 +23,38 @@ The program takes the output of the assembler and execute it, correctly.
 
 # How to install and run
 
+git clone the repo
+
 # How to use
+
+## can be used in 3 modes
+
+Only mode one is complete
+
+### **1. see complete preprocessed assembly file infomation**
+
+Displays informatio of preprocessed assembly file. Preprocessing is the first step that the assembly file goes through where comments are eliminated, subroutines identified among other steps.
+
+```sh
+ python3 run.py read test.txt
+```
+
+### **2. compile an assembly file source code to byte code**
+
+Specify the source file and destination file.
+
+```sh
+python3 run.py make filename.txt filename.s/filename.obj
+```
+
+### **3. Run simulator to prosses byte code or obj file**
+
+Coming soon.
 
 # Credits
 
 ## Work by Sammy Barasa [(https://github.com/Sammy-Barasa/MIPS-Assembler)](https://github.com/Sammy-Barasa/MIPS-Assembler)
+
 My refernce stems from some work I did earlier on a MIPS-Assembler [(https://github.com/Sammy-Barasa/MIPS-Assembler)](https://github.com/Sammy-Barasa/MIPS-Assembler) see details on this link.
 
 project0 features a unique instruction set, an improved program structure and documentation, a more efficient preprocessing stage, tests and a simulator.

@@ -51,8 +51,8 @@ class Assembler():
 	def printLines(self,lines):
 		for i in range(0,len(lines)):
 			print(f"{i+1}:{lines[i]}")
-		print(self.all_lines_info)
-		print(self.all_lines)
+		# print(self.all_lines_info)
+		# print(self.all_lines)
 		for i in range(0,len(lines)):   
 			start_val = self.all_lines_info[str(i)]["start"]
 			line_val = f"{start_val}: "
@@ -65,7 +65,7 @@ class Assembler():
 		with open('output.txt', 'w', encoding='utf-8') as f:
 			f.writelines(f"{l}\n" for l in lines)    
 			
-		print("ASM FILE INFORMATION")
+		print("ASSEMBLY FILE INFORMATION")
 		
 		print("Labels: ")
 		print(self.labels)
@@ -126,7 +126,7 @@ class Assembler():
 			line_sizes =[]
 			for i in range(0,len(lines)):
 				line_sizes.append(len(lines[i]))
-			print("line sizes: ",line_sizes)
+			# print("line sizes: ",line_sizes)
 			try:
 				indx =line_sizes.index(0) # since the initial part will have length 0
 				del lines[indx]
@@ -171,7 +171,7 @@ class Assembler():
 
 	def replace_labels_to_start_addresses(self):
 		# replace labels start address of the next line
-		print(self.all_lines_info)
+		# print(self.all_lines_info)
 		for i,key in enumerate(self.labels):
 			# print(self.labels)
 			# print("key: ",key)
@@ -179,7 +179,7 @@ class Assembler():
 			label_value = self.labels[label]
 
 			self.labels[key]=self.all_lines_info[str(self.labels[key])]["start"]
-			print(self.labels)
+			# print(self.labels)
 
 			# delete the lable line at i
 			del self.all_lines[label_value]
@@ -232,11 +232,9 @@ class Assembler():
 		
 		# self.replace_labels_to_start_addresses()
 		# third run: change instructions to hex, everything to 4 bytes
-		print("Before")
-		print(self.all_lines)
+		
 		# start with labels to  hex
 		self.replace_labels_to_start_addresses()
-		print("after")
-		print(self.all_lines)
+		
 
 		
