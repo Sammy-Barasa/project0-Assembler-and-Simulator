@@ -31,7 +31,7 @@ class Assembler():
 	'dec':['0x0E']
 	} # operation code table
 	compiled_lines =[]
-
+	register_names = {'R1':'0x00','R2':'0x01','R3':'0x02','PC':'0x03','COND':'0x04'}
 
 	def __init__(self,base_dir):
 		self.BASE_DIR =base_dir
@@ -242,6 +242,12 @@ class Assembler():
 	def compile(self,file2):
 		'''
 			change to 4 bit byte code
+			opcode register = 0x00
+			R1 = 0x01
+			R2 = 0x02
+			R3 = 0x03
+			PC = 0x04
+			COND = 0x05
 		'''
 		
 		lines = self.all_lines
@@ -259,88 +265,15 @@ class Assembler():
 				code = lines[i][j]
 				if code in self.opcode_table.keys():
 					lines[i][j] = self.opcode_table[code][0]
+
+			# replace registers with hex values		
 			for j in range(0,len(lines[i])):
-				code = lines[i][j]
+				reg = lines[i][j]
 				line_compiled = line_compiled +" "+code
+				if reg in self.register_names.keys():
+					lines[i][j] = self.register_names[reg]
 
-		# change line to half-bytes [[opcode][R1][R2][R3][PC][COND][U][L]]
-		instruction = [[],[],[],[],[],[],[],[]]
-		
-		for j in range(0,len(lines)):
-			'''
-			b5 for NULL/EMPTY register, b0 for FALSE, b1 TRUE
-			'''
-			if lines[j][0] == '0x00':
-				start_memory = self.all_lines_info[str((j-1))]["start"]
-				instruction[0][:]=f"{eval(lines[j][0]):04b}"
-				instruction[4]=f"{eval(start_memory):04b}"
-
-			elif lines[j][0] == '0x01':
-				instruction[0][:]=f"{eval(lines[j][0]):04b}"
-
-			elif lines[j][0] == '0x02':
-				# li R1 0x00000000
-				start_memory = self.all_lines_info[str((j+1))]["start"]
-				instruction[0][:]=f"{eval(lines[j][0]):04b}"
-				instruction[4]=f"{eval(start_memory):04b}"
-				instruction[5]=f"{5:04b}" # COND b5 for NULL/EMPTY, b0 for FALSE, b1 TRUE
-				instruction[6]=f"{0:04b}"
-				instruction[7]=f"{0:04b}"
-				if lines[j][1] == 'R1':
-					instruction[1]=f"{eval(lines[j][2]):04b}"
-					instruction[2]=f"{5:04b}"
-					instruction[3]=f"{5:04b}"
-				elif lines[j][1] == 'R2':
-					instruction[1]=f"{5:04b}"
-					instruction[2]=f"{eval(lines[j][2]):04b}"
-					instruction[3]=f"{5:04b}"
-				elif lines[j][1] == 'R3':
-					instruction[1]=f"{5:04b}"
-					instruction[2]=f"{5:04b}"
-					instruction[3]=f"{eval(lines[j][2]):04b}"
-				
-			elif lines[j][0] == '0x03':
-				# lw R1 R2
-				instruction[0][:]=f"{eval(lines[j][0]):04b}"
-			
-			elif lines[j][0] == '0x04':
-				instruction[0][:]=f"{eval(lines[j][0]):04b}"
-
-			elif lines[j][0] == '0x05':
-				instruction[0][:]=f"{eval(lines[j][0]):04b}"
-			
-			elif lines[j][0] == '0x06':
-				instruction[0][:]=f"{eval(lines[j][0]):04b}"
-			
-			elif lines[j][0] == '0x07':
-				instruction[0][:]=f"{eval(lines[j][0]):04b}"
-
-			elif lines[j][0] == '0x08':
-				instruction[0][:]=f"{eval(lines[j][0]):04b}"
-			
-			elif lines[j][0] == '0x09':
-				instruction[0][:]=f"{eval(lines[j][0]):04b}"
-			
-			elif lines[j][0] == '0x0A':
-				instruction[0][:]=f"{eval(lines[j][0]):04b}"
-			
-			elif lines[j][0] == '0x0B':
-				instruction[0][:]=f"{eval(lines[j][0]):04b}"
-			
-			elif lines[j][0] == '0x0C':
-				instruction[0][:]=f"{eval(lines[j][0]):04b}"
-
-			elif lines[j][0] == '0x0D':
-				instruction[0][:]=f"{eval(lines[j][0]):04b}"
-
-			elif lines[j][0] == '0x0E':
-				instruction[0][:]=f"{eval(lines[j][0]):04b}"
-
-			elif lines[j][0] == '0x0F':
-				instruction[0][:]=f"{eval(lines[j][0]):04b}"
-
-			print(instruction)
-			instruction = [[],[],[],[],[],[],[],[]]
+	
 		print(lines)	
 		with open(file2, 'w', encoding='utf-8') as f1:
 			current_line=f""
