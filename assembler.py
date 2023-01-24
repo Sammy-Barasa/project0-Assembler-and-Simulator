@@ -263,7 +263,10 @@ class Assembler():
 				code = lines[i][j]
 				line_compiled = line_compiled +" "+code
 
-			# self.compiled_lines[i][:] = line_compiled
+			# change line to half-bytes [[opcode][R1][R2][R3][PC][COND][U][L]]
+			instruction = [[],[],[],[],[],[],[],[]]
+			for j in range(0,len(lines[i])):
+				pass
 		
 		print(lines)	
 		with open(file2, 'w', encoding='utf-8') as f1:

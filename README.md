@@ -41,6 +41,26 @@ Displays informatio of preprocessed assembly file. Preprocessing is the first st
  python3 run.py read test.txt
 ```
 
+test.txt should be a file containing assembly source code an example is shown below:
+
+```s
+; a simple counter program.
+li R1 0x00000000
+; end
+li R2 0x0000FFFF
+; memory location of loop start
+li R3 loop
+loop:
+  ; store the contents of R1 at the memory location pointed by R1
+  sw R1 R1
+  ; increment the counter
+  inc R1
+  ; loop if the counter hasn't yet reached the end
+  bne R1 R2 R3
+  ; end program
+  halt
+```
+
 ### **2. compile an assembly file source code to byte code**
 
 Specify the source file and destination file.
@@ -53,6 +73,20 @@ or
 
 ```sh
 python3 run.py make test.txt compiled.obj
+```
+
+Intermediate compiled file is first generated and then converted into instruction in bytes.
+  
+Intermediate compiled file result looks as shown below:
+
+```sh
+ 0x02 R1 0x00000000
+ 0x02 R2 0x0000FFFF
+ 0x02 R3 0x60
+ 0x04 R1 R1
+ 0x0D R1
+ 0x0C R1 R2 R3
+ 0x00
 ```
 
 ### **3. Run simulator to prosses byte code or obj file**
