@@ -265,8 +265,11 @@ class Assembler():
 
 		# change line to half-bytes [[opcode][R1][R2][R3][PC][COND][U][L]]
 		instruction = [[],[],[],[],[],[],[],[]]
-		# print(self.all_lines_info)
+		
 		for j in range(0,len(lines)):
+			'''
+			b5 for NULL/EMPTY register, b0 for FALSE, b1 TRUE
+			'''
 			if lines[j][0] == '0x00':
 				start_memory = self.all_lines_info[str((j-1))]["start"]
 				instruction[0][:]=f"{eval(lines[j][0]):04b}"
@@ -280,14 +283,24 @@ class Assembler():
 				start_memory = self.all_lines_info[str((j+1))]["start"]
 				instruction[0][:]=f"{eval(lines[j][0]):04b}"
 				instruction[4]=f"{eval(start_memory):04b}"
+				instruction[5]=f"{5:04b}" # COND b5 for NULL/EMPTY, b0 for FALSE, b1 TRUE
+				instruction[6]=f"{0:04b}"
+				instruction[7]=f"{0:04b}"
 				if lines[j][1] == 'R1':
 					instruction[1]=f"{eval(lines[j][2]):04b}"
+					instruction[2]=f"{5:04b}"
+					instruction[3]=f"{5:04b}"
 				elif lines[j][1] == 'R2':
+					instruction[1]=f"{5:04b}"
 					instruction[2]=f"{eval(lines[j][2]):04b}"
+					instruction[3]=f"{5:04b}"
 				elif lines[j][1] == 'R3':
+					instruction[1]=f"{5:04b}"
+					instruction[2]=f"{5:04b}"
 					instruction[3]=f"{eval(lines[j][2]):04b}"
 				
 			elif lines[j][0] == '0x03':
+				# lw R1 R2
 				instruction[0][:]=f"{eval(lines[j][0]):04b}"
 			
 			elif lines[j][0] == '0x04':
