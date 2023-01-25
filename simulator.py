@@ -1,7 +1,7 @@
 class Simulator():
     BASE_DIR = ""
     registers_names = {'R1':0,'R2':1,'R3':2,'PC':3,'COND':4} # registers
-    register = [[],[],[],[],[],[]]
+    register = [[],[],[],[],[],[]] # [[opcode][R1][R2][R3][PC][COND]
 
     def __init__(self,base_dir) -> None:
         self.BASE_DIR = base_dir

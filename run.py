@@ -4,10 +4,14 @@ from assembler import Assembler
 
 import argparse
 parser = argparse.ArgumentParser()
-parser.add_argument('--foo', help='foo help')
-args = parser.parse_args()
 
-def run(cmd):
+parser.add_argument('action', help='argument for selecting either: read, make or sim')
+parser.add_argument('inputfile', help='argument for input filename')
+parser.add_argument('outputfile', help='argument for output filename')
+parser.add_argument('-i','--i', help='flag for creating intermediate file')
+
+
+def run(cmd,args):
     base_dir = Path().resolve()
     assembler_obj = Assembler(base_dir) # assembler object
     # compile_assembly.startProgram()
@@ -18,7 +22,7 @@ def run(cmd):
         print("use commands:")
         print("[read filename.txt]")
         print("[make filename.txt filename.s/filename.obj]")
-        print("[sim run filename.obj/filename.s]")
+        print("[sim filename.obj/filename.s]")
         print(" ")
         print(cmd)
         return "Too many arguments"
@@ -43,7 +47,7 @@ def run(cmd):
         # self.printLines(self.all_lines)
         return True
     
-    elif cmd[1]== "run":
+    elif cmd[1]== "sim":
         # run simulator on assembled byte code *.obj file
         # self.readLines(cmd[2])
         # self.convert(self.all_lines)
@@ -61,5 +65,6 @@ def run(cmd):
         
 
 if __name__ == "__main__":
+    args = parser.parse_args()
     cmd = sys.argv
-    run(cmd)
+    run(cmd,args)

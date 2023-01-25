@@ -25,13 +25,37 @@ The program takes the output of the assembler and execute it, correctly.
 
 # How to install and run
 
-git clone the repo
+1. git clone the repo
 
+```sh
+git clone [past git clone link here]
+```
+
+2. see help for options
+
+```sh
+  python3 run.py -h
+```
+
+Instructions shown below will be presented:
+
+```sh
+usage: run.py [-h] [-i I] action inputfile outputfile
+
+positional arguments:
+  action       argument for selecting either: read, make or sim
+  inputfile    argument for input file path
+  outputfile   argument for output file path
+
+options:
+  -h, --help   show this help message and exit
+  -i I, --i I  flag for creating intermediate file
+```
 # How to use
 
 ## can be used in 3 modes
 
-Only mode one is complete
+Only mode one and two are complete
 
 ### **1. see complete preprocessed assembly file infomation**
 
