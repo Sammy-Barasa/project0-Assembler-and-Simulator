@@ -4,11 +4,11 @@ from assembler import Assembler
 
 import argparse
 parser = argparse.ArgumentParser()
+parser.add_argument('--inter',dest='intermidiate', help='flag for creating intermediate file')
+parser.add_argument('program_action',nargs="*", help='argument for selecting either: read, make or sim;\n and providing input filename, output filename')
+# parser.add_argument('inputfile', help='argument for input filename',required=False)
+# parser.add_argument('outputfile', help='argument for output filename',required=False)
 
-parser.add_argument('action', help='argument for selecting either: read, make or sim')
-parser.add_argument('inputfile', help='argument for input filename')
-parser.add_argument('outputfile', help='argument for output filename')
-parser.add_argument('-i','--i', help='flag for creating intermediate file')
 
 
 def run(cmd,args):
@@ -43,7 +43,7 @@ def run(cmd,args):
         # self.readLines(cmd[2])
         assembler_obj.readLines(cmd[2])
         assembler_obj.preprocess(assembler_obj.all_lines)
-        assembler_obj.compile(cmd[3])
+        assembler_obj.compile(cmd[3],args.intermidiate)
         # self.printLines(self.all_lines)
         return True
     
@@ -58,7 +58,7 @@ def run(cmd,args):
         print("PLEASE PROVIDE ALL THE ARGUMENTS REQUIRED!!!")
         print("read filename.s")
         print("make filename.s filename.obj")
-        print("make test.txt compile.s")
+        print("sim test.txt compile.s")
 
         # sys.exit()
         return "Missing argument"
@@ -67,4 +67,5 @@ def run(cmd,args):
 if __name__ == "__main__":
     args = parser.parse_args()
     cmd = sys.argv
+    print(args)
     run(cmd,args)

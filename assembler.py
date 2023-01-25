@@ -239,7 +239,7 @@ class Assembler():
 		self.replace_labels_to_start_addresses()
 		
 
-	def compile(self,file2):
+	def compile(self,file2,interm):
 		'''
 			change to 4 bit byte code
 			opcode register = 0x00
@@ -274,7 +274,7 @@ class Assembler():
 					lines[i][j] = self.register_names[reg]
 
 		
-
+			# if interm:
 			with open("intermidiate.s", 'w', encoding='utf-8') as f1:
 				current_line=f""
 				for l in range(len(lines)):
