@@ -25,13 +25,14 @@ The program takes the output of the assembler and execute it, correctly.
 
 # How to install and run
 
-1. git clone the repo
+**1. git clone the repo**
 
 ```sh
 git clone [past git clone link here]
 ```
+**NB: branch dev is ahead**   
 
-2. see help for options
+**2. see help for options**
 
 ```sh
   python3 run.py -h
@@ -51,6 +52,7 @@ options:
   -h, --help   show this help message and exit
   -i I, --i I  flag for creating intermediate file
 ```
+
 # How to use
 
 ## can be used in 3 modes
@@ -103,6 +105,7 @@ Intermediate compiled file is first generated and then converted into instructio
   
 Intermediate compiled file result looks as shown below:
 
+
 ```sh
  0x02 0x00 0x00000000
  0x02 0x01 0x0000FFFF
@@ -112,6 +115,13 @@ Intermediate compiled file result looks as shown below:
  0x0C 0x00 0x01 0x02
  0x00
 ```
+**flag -i or --i or I is used at the commandline if you want an intermidiate file to be produced**  
+
+` python3 run.py -i make test.txt compiled.s`  
+or   
+` python3 run.py --i make test.txt compiled.s`   
+or   
+` python3 run.py I make test.txt compiled.s`  
 
 Byte code file is generated in 16 word binary and is shown below:
 
