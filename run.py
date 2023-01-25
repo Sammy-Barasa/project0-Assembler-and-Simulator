@@ -2,6 +2,11 @@ import sys
 from pathlib import Path
 from assembler import Assembler
 
+import argparse
+parser = argparse.ArgumentParser()
+parser.add_argument('--foo', help='foo help')
+args = parser.parse_args()
+
 def run(cmd):
     base_dir = Path().resolve()
     assembler_obj = Assembler(base_dir) # assembler object
