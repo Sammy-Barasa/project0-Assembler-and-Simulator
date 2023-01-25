@@ -1,4 +1,4 @@
-# ![GitHub](https://img.shields.io/github/license/Sammy-Barasa/project0-Assembler-and-Simulator) ![GitHub contributors](https://img.shields.io/github/contributors/Sammy-Barasa/project0-Assembler-and-Simulator)
+# ![GitHub](https://img.shields.io/github/license/Sammy-Barasa/project0-Assembler-and-Simulator) ![GitHub contributors](https://img.shields.io/github/contributors/Sammy-Barasa/project0-Assembler-and-Simulator)  [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/Sammy-Barasa/project0-Assembler-and-Simulator#how-to-contribute-)
 
 ## project0-Assembler-and-Simulator
 
@@ -116,18 +116,38 @@ Intermediate compiled file result looks as shown below:
 Byte code file is generated in 16 word binary and is shown below:
 
 ```sh
- 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 1 0 0 0 0 1 1 1 1 1 1 1 1 1
- 0 0 1 0 0 0 1 0 0 1 1 0 0 0 0 0
- 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 1 1 0 1 0 0 0 0 0 0 0 0 0 0 0 0
- 1 1 0 0 0 0 0 0 0 0 0 1 0 0 1 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0010000000000000
+0010000111111111
+0010001001100000
+0100000000000000
+1101000000000000
+1100000000010010
+0000000000000000
 ```
 
 ### **3. Run simulator to prosses byte code or obj file**
 
-Coming soon.
+The register table is displayed showing the register data after every line is executed. The registers value begin empty with value `xxxx` and are updated as each line is executed
+
+Out of the 16 instructions, only the first three have been implemented.
+
+**Completed instruction: 3/16**
+
+The register table looks as shown below:
+
+```sh
+___________________________________
+ -| R1  |  R2  |  R3  |  PC  | COND
+___________________________________
+ 1|0x00 | xxxx | xxxx | 0x10 | xxxx
+ 2|0x00 | 0xff | xxxx | 0x20 | xxxx
+ 3|0x00 | 0xff | 0x30 | 0x30 | xxxx
+ 4|0x00 | 0xff | 0x30 | 0x30 | xxxx
+ 5|0x00 | 0xff | 0x30 | 0x30 | xxxx
+ 6|0x00 | 0xff | 0x30 | 0x30 | xxxx
+ 7|0x00 | 0xff | 0x30 | 0x50 | xxxx
+
+```
 
 # Credits
 
@@ -141,7 +161,7 @@ project0 features a unique instruction set, an improved program structure and do
 
 One of my fundamental learning material used for referencing and understanding the assembler. The Art of Assembly Language has provided a comprehensive, plain-English, and patient introduction to 32-bit x86 assembly for non-assembly programmers. Hyde's primary teaching tool, High Level Assembler (or HLA), incorporates many of the features found in high-level languages (like C, C++, and Java) to help you quickly grasp basic assembly concepts. HLA lets you write true low-level code while enjoying the benefits of high-level language programming.
 
-# How to contribute [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/Sammy-Barasa/project0-Assembler-and-Simulator#how-to-contribute-)
+# How to contribute 
 
 1. Add an issue
 2. Clone the repo

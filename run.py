@@ -1,6 +1,7 @@
 import sys
 from pathlib import Path
 from assembler import Assembler
+from simulator import Simulator
 
 import argparse
 parser = argparse.ArgumentParser()
@@ -14,6 +15,7 @@ parser.add_argument('program_action',nargs="*", help='argument for selecting eit
 def run(cmd,args):
     base_dir = Path().resolve()
     assembler_obj = Assembler(base_dir) # assembler object
+    simulator_obj = Simulator(base_dir)
     # compile_assembly.startProgram()
 
 
@@ -49,6 +51,7 @@ def run(cmd,args):
     
     elif cmd[1]== "sim":
         # run simulator on assembled byte code *.obj file
+        simulator_obj.simulate(cmd[2])
         # self.readLines(cmd[2])
         # self.convert(self.all_lines)
         # self.printLines(self.all_lines)
@@ -58,7 +61,7 @@ def run(cmd,args):
         print("PLEASE PROVIDE ALL THE ARGUMENTS REQUIRED!!!")
         print("read filename.s")
         print("make filename.s filename.obj")
-        print("sim test.txt compile.s")
+        print("sim compile.s")
 
         # sys.exit()
         return "Missing argument"
@@ -67,5 +70,5 @@ def run(cmd,args):
 if __name__ == "__main__":
     args = parser.parse_args()
     cmd = sys.argv
-    print(args)
+    # print(args)
     run(cmd,args)

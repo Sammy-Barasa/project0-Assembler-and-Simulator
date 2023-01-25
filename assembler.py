@@ -2,7 +2,27 @@
 import os
 import re
 
-class Assembler():
+
+def update_line_information(start_memory_location,lines,hold_line_info):
+		# update line info: {"0":[start_addres,end_address]}
+		start_addr = start_memory_location
+		end_addr = 0
+		# lines_to_ignnore = list(self.preprocessor_commands.values())
+
+		# not_updated = True
+		
+		# while not_updated:
+		for i in range(0,len(lines)):
+			# to help track the new lines being modified
+
+			end_addr = start_addr+15
+			info = {"start":"0x"+f"{start_addr:02x}", "end":"0x"+f"{end_addr:02x}"}
+			hold_line_info[str(i)]= info
+			start_addr=end_addr+1
+		
+			# not_updated = False
+
+class Assembler:
 	BASE_DIR = "" # base directory
 	all_lines=[]
 	all_lines_info={}
@@ -46,6 +66,9 @@ class Assembler():
 			with open(full_file_path) as f:
 				# read lines and store all_lines[]
 				self.all_lines=f.readlines()
+		except FileNotFoundError:
+			info = f"No such file as {file} was found"
+			print(info)
 		except:
 			raise
 
@@ -150,27 +173,7 @@ class Assembler():
 		for i in range(0,len(lines)):
 			lines[i]=lines[i].split()	
 	
-	def update_line_information(self,lines):
-		# update line info: {"0":[start_addres,end_address]}
-		start_addr = self.start_memory_location
-		end_addr = 0
-		# lines_to_ignnore = list(self.preprocessor_commands.values())
-
-		# not_updated = True
-		
-		# while not_updated:
-		for i in range(0,len(lines)):
-			# to help track the new lines being modified
-
-			end_addr = start_addr+31
-			info = {"start":hex(start_addr), "end":hex(end_addr)}
-			self.all_lines_info[str(i)]= info
-			start_addr=end_addr+1
-		
-			# not_updated = False
-
-
-
+	
 	def replace_labels_to_start_addresses(self):
 		# replace labels start address of the next line
 		# print(self.all_lines_info)
@@ -230,7 +233,7 @@ class Assembler():
 		self.remove_commas(lines)
 		self.remove_spaces(lines)
 		
-		self.update_line_information(lines)
+		update_line_information(self.start_memory_location,lines,self.all_lines_info)
 		
 		# self.replace_labels_to_start_addresses()
 		# third run: change instructions to hex, everything to 4 bytes
@@ -292,7 +295,8 @@ class Assembler():
 			for j in range(len(inst)):
 				vals=vals+inst[j]
 			for k in range(0,len(vals)):
-				current_line = current_line+" "+str(vals[k])
+				current_line = current_line+str(vals[k])
+				# current_line = current_line+" "+str(vals[k])
 
 			self.compiled_lines.append(current_line)
 			current_line=f""
