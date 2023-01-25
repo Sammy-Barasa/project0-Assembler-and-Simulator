@@ -273,13 +273,90 @@ class Assembler():
 				if reg in self.register_names.keys():
 					lines[i][j] = self.register_names[reg]
 
-	
-		print(lines)	
-		with open(file2, 'w', encoding='utf-8') as f1:
-			current_line=f""
-			for l in range(len(lines)):
-				for j in range(len(lines[l])):
-					current_line = current_line+" "+str(lines[l][j])
-			
-				f1.write(f"{current_line}\n")
+		
+
+			with open("intermidiate.s", 'w', encoding='utf-8') as f1:
 				current_line=f""
+				for l in range(len(lines)):
+					for j in range(len(lines[l])):
+						current_line = current_line+" "+str(lines[l][j])
+				
+					f1.write(f"{current_line}\n")
+					current_line=f""
+
+			
+			inst=self.compiled_to_instruction(lines[i])
+			# with open(file2, 'w', encoding='utf-8') as f:
+			current_line=f""
+			vals =[]
+			for j in range(len(inst)):
+				vals=vals+inst[j]
+			for k in range(0,len(vals)):
+				current_line = current_line+" "+str(vals[k])
+
+			self.compiled_lines.append(current_line)
+			current_line=f""
+			vals =[]
+
+		with open(file2, 'w', encoding='utf-8') as f:
+			f.writelines(f"{l}\n" for l in self.compiled_lines) 		
+
+
+
+	def compiled_to_instruction(self,compiled_line):
+		instruction = [[],[],[],[]]
+		
+		if len(compiled_line)==4:
+			for i in range(0,len(compiled_line)):
+				# 0x0C 0x00 0x01 0x02
+				#to
+				# 1100 0010 0001 0001
+				instruction[i][:] = f"{eval(compiled_line[i]):04b}"
+			
+		elif len(compiled_line)==3:
+			for i in range(0,len(compiled_line)):
+				if i == 2:
+					third = f"{eval(compiled_line[i]):04b}"
+
+					if len(third)>4:
+						third = f"{eval(compiled_line[i]):08b}"
+						# also upper higher bits have a value
+						instruction[3][:] = third[-4:]
+						instruction[2][:] = third[-8:-4]
+					else:
+						# also upper higher bits have no value
+						instruction[3][:] = f"{0:04b}"
+						instruction[2][:] = third
+
+				else:
+					# 0x0C 0x01 
+					#to
+					# 1100 0001 0000 0000
+					instruction[i][:] = f"{eval(compiled_line[i]):04b}"
+				
+
+		elif len(compiled_line)==2:
+			for i in range(0,len(compiled_line)):
+				# 0x0C 0x01 
+				#to
+				# 1100 0001 0000 0000
+				instruction[i][:] = f"{eval(compiled_line[i]):04b}"
+			instruction[2][:] = f"{0:04b}"
+			instruction[3][:] = f"{0:04b}"
+			
+
+		elif len(compiled_line)==1:
+			for i in range(0,len(compiled_line)):
+				# 0x0C 
+				#to
+				# 1100 0000 0000 0000
+				instruction[i][:] = f"{eval(compiled_line[i]):04b}"
+
+			instruction[1][:] = f"{0:04b}"
+			instruction[2][:] = f"{0:04b}"
+			instruction[3][:] = f"{0:04b}"
+
+		# print(instruction)
+		return instruction
+
+		

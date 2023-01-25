@@ -89,6 +89,18 @@ Intermediate compiled file result looks as shown below:
  0x00
 ```
 
+Byte code file is generated in 16 word binary and is shown below:
+
+```sh
+ 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 1 0 0 0 0 1 1 1 1 1 1 1 1 1
+ 0 0 1 0 0 0 1 0 0 1 1 0 0 0 0 0
+ 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 1 1 0 1 0 0 0 0 0 0 0 0 0 0 0 0
+ 1 1 0 0 0 0 0 0 0 0 0 1 0 0 1 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+```
+
 ### **3. Run simulator to prosses byte code or obj file**
 
 Coming soon.
