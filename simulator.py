@@ -66,7 +66,21 @@ class Simulator():
         elif opcode == '0x03':
             # lw R1 R2
             # self.register_state[0]=opcode
-            pass
+            first = code1 # destination
+            second = "0x"+f"{int(code2,2):02x}" # source
+
+            if self.registers_names[first]=="R1"  and self.registers_names[second]=="R2" :
+                self.register_state[0] = self.register_state[1]
+            elif self.registers_names[first]=="R2"  and self.registers_names[second]=="R1":
+                self.register_state[1] = self.register_state[0]
+            elif self.registers_names[first]=="R1"  and self.registers_names[second]=="R3":
+                self.register_state[0] = self.register_state[2]
+            elif self.registers_names[first]=="R3"  and self.registers_names[second]=="R1":
+                self.register_state[2] = self.register_state[0]
+            elif self.registers_names[first]=="R2"  and self.registers_names[second]=="R3":
+                self.register_state[1] = self.register_state[2]
+            elif self.registers_names[first]=="R3"  and self.registers_names[second]=="R2":
+                self.register_state[2] = self.register_state[1]
         
         elif opcode == '0x04':
             # self.register_state[0]=opcode
