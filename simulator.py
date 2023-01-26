@@ -2,7 +2,7 @@ import os
 from assembler import update_line_information
 class Simulator():
     BASE_DIR = ""
-    registers_names = {'0x00':'R1','0x01':'R2','0x02':'R3','0x03':'PC','0x04':'COND'} # registers
+    registers_names = {'0x00':['R1',0],'0x01':['R2',1],'0x02':['R3',2],'0x03':['PC',3],'0x04':['COND',0]} # registers
     register_state = ["xxxx","xxxx","xxxx","xxxx","xxxx","xxxx"] # [[opcode][R1][R2][R3][PC][COND]
     file_name = ""
     bytecode_lines =[]
@@ -54,13 +54,13 @@ class Simulator():
             # self.register_state[3]=f"{eval(memory_next_instr):04b}"
             self.register_state[3]=memory_next_instr # COND b5 for NULL/EMPTY, b0 for FALSE, b1 TRUE
 
-            if self.registers_names[code1] == 'R1':
+            if self.registers_names[code1][0] == 'R1':
                 self.register_state[0]=code2_code3
 
-            elif self.registers_names[code1] == 'R2':
+            elif self.registers_names[code1][0] == 'R2':
                 self.register_state[1]=code2_code3
 
-            elif self.registers_names[code1] == 'R3':
+            elif self.registers_names[code1][0] == 'R3':
                 self.register_state[2]=code2_code3
             
         elif opcode == '0x03':
@@ -69,45 +69,65 @@ class Simulator():
             first = code1 # destination
             second = "0x"+f"{int(code2,2):02x}" # source
 
-            if self.registers_names[first]=="R1"  and self.registers_names[second]=="R2" :
+            if self.registers_names[first][0]=="R1"  and self.registers_names[second][0]=="R2" :
                 self.register_state[0] = self.register_state[1]
-            elif self.registers_names[first]=="R2"  and self.registers_names[second]=="R1":
+            elif self.registers_names[first][0]=="R2"  and self.registers_names[second][0]=="R1":
                 self.register_state[1] = self.register_state[0]
-            elif self.registers_names[first]=="R1"  and self.registers_names[second]=="R3":
+            elif self.registers_names[first][0]=="R1"  and self.registers_names[second][0]=="R3":
                 self.register_state[0] = self.register_state[2]
-            elif self.registers_names[first]=="R3"  and self.registers_names[second]=="R1":
+            elif self.registers_names[first][0]=="R3"  and self.registers_names[second][0]=="R1":
                 self.register_state[2] = self.register_state[0]
-            elif self.registers_names[first]=="R2"  and self.registers_names[second]=="R3":
+            elif self.registers_names[first][0]=="R2"  and self.registers_names[second][0]=="R3":
                 self.register_state[1] = self.register_state[2]
-            elif self.registers_names[first]=="R3"  and self.registers_names[second]=="R2":
+            elif self.registers_names[first][0]=="R3"  and self.registers_names[second][0]=="R2":
                 self.register_state[2] = self.register_state[1]
         
         elif opcode == '0x04':
             # lw R1 R2
-            
+                        
             first = code1 # destination
             second = "0x"+f"{int(code2,2):02x}" # source
 
-            if self.registers_names[first]=="R1"  and self.registers_names[second]=="R2" :
+            if self.registers_names[first][0]=="R1"  and self.registers_names[second][0]=="R2" :
                 self.register_state[0] = self.register_state[1]
-            elif self.registers_names[first]=="R2"  and self.registers_names[second]=="R1":
+            elif self.registers_names[first][0]=="R2"  and self.registers_names[second][0]=="R1":
                 self.register_state[1] = self.register_state[0]
-            elif self.registers_names[first]=="R1"  and self.registers_names[second]=="R3":
+            elif self.registers_names[first][0]=="R1"  and self.registers_names[second][0]=="R3":
                 self.register_state[0] = self.register_state[2]
-            elif self.registers_names[first]=="R3"  and self.registers_names[second]=="R1":
+            elif self.registers_names[first][0]=="R3"  and self.registers_names[second][0]=="R1":
                 self.register_state[2] = self.register_state[0]
-            elif self.registers_names[first]=="R2"  and self.registers_names[second]=="R3":
+            elif self.registers_names[first][0]=="R2"  and self.registers_names[second][0]=="R3":
                 self.register_state[1] = self.register_state[2]
-            elif self.registers_names[first]=="R3"  and self.registers_names[second]=="R2":
+            elif self.registers_names[first][0]=="R3"  and self.registers_names[second][0]=="R2":
                 self.register_state[2] = self.register_state[1]
                 
         elif opcode == '0x05':
-            pass
-            # self.register_state[0]=opcode
-        
+            # add R3 R1 R2
+            # 0101001000010000
+            #      1  2  3
+            op1 = code1
+            op2 = "0x"+f"{int(instructions[2],2):02x}"
+            op3 = "0x"+f"{int(instructions[3],2):02x}"
+            sum = "0x"+f"{int(op3, 16) + int(op2, 16):02x}"
+            # print(f"sum is {sum} at {self.registers_names[op1][0]}")
+            self.register_state[self.registers_names[op1][1]] = sum
+                    
         elif opcode == '0x06':
-            pass
-            # self.register_state[0]=opcode
+            # sub R3 R1 R2
+            # 0110001000010000
+            # 0110001000010011
+            #      1  2  3
+            op1 = code1
+            op2 = "0x"+f"{int(instructions[2],2):02x}"
+            op3 = "0x"+f"{int(instructions[3],2):02x}"
+            diff = hex(int(op2, 16) - int(op3, 16))
+            if diff[0]=="-":
+                # print("negative result")
+                pass # not changing the format of resentation
+            else:
+               diff = "0x"+f"{int(op2, 16) - int(op3, 16):02x}"
+            # print(f"difference is {diff} at {self.registers_names[op1][0]}")
+            self.register_state[self.registers_names[op1][1]] = diff
         
         elif opcode == '0x07':
             pass
