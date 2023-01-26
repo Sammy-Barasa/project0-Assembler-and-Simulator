@@ -4,8 +4,9 @@ from simulator import Simulator
 from pathlib import Path
 from assembler import update_line_information
 
+
 sim = Simulator(Path().resolve())
-sim.read_bytecode("compiled_test.s")
+sim.read_bytecode("test/compiled_test.s")
 update_line_information(sim.initial_temp_mem_location,sim.bytecode_lines,sim.bytecode_lines_info)
 sim.break_bytecodeline_fours(sim.bytecode_lines)
 
