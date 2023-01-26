@@ -130,8 +130,15 @@ class Simulator():
             self.register_state[self.registers_names[op1][1]] = diff
         
         elif opcode == '0x07':
-            pass
-            # self.register_state[0]=opcode
+            # mult R3 R1 R2
+            # 0111001000010000
+            op1 = code1
+            op2 = "0x"+f"{int(instructions[2],2):02x}"
+            op3 = "0x"+f"{int(instructions[3],2):02x}"
+            mul = "0x"+f"{int(op2, 16) *int(op3, 16):02x}"
+            # print(f"difference is {mul} at {self.registers_names[op1][0]}")
+            self.register_state[self.registers_names[op1][1]] = mul
+            
 
         elif opcode == '0x08':
             pass
