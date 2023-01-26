@@ -129,9 +129,9 @@ Byte code file is generated in 16 word binary and is shown below:
 
 The register table is displayed showing the register data after every line is executed. The registers value begin empty with value `xxxx` and are updated as each line is executed
 
-Out of the 16 instructions, only the first three have been implemented.
+Out of the 16 instructions, only the first four have been implemented.
 
-**Completed instruction: 3/16**
+**Completed instruction: 4/16**
 
 The register table looks as shown below:
 
