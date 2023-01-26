@@ -129,9 +129,9 @@ Byte code file is generated in 16 word binary and is shown below:
 
 The register table is displayed showing the register data after every line is executed. The registers value begin empty with value `xxxx` and are updated as each line is executed
 
-Out of the 16 instructions, only the first four have been implemented.
+Out of the 16 instructions, only the first 7 have been implemented.
 
-**Completed instruction: 4/16**
+**Completed instruction: 7/16**
 
 The register table looks as shown below:
 
@@ -156,6 +156,8 @@ ___________________________________
 My refernce stems from some work I did earlier on a MIPS-Assembler [(https://github.com/Sammy-Barasa/MIPS-Assembler)](https://github.com/Sammy-Barasa/MIPS-Assembler) see details on this link.
 
 project0 features a unique instruction set, an improved program structure and documentation, a more efficient preprocessing stage, tests and a simulator.
+
+[(Binary mathematics reference)](https://levelup.gitconnected.com/computing-binary-numbers-with-python-a6e00be69bea)
 
 ### The Art of Assembly Language, 2nd Edition by Randall Hyde
 
