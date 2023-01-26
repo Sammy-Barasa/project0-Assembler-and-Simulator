@@ -138,6 +138,7 @@ class Simulator():
             mul = "0x"+f"{int(op2, 16) *int(op3, 16):02x}"
             # print(f"difference is {mul} at {self.registers_names[op1][0]}")
             self.register_state[self.registers_names[op1][1]] = mul
+            return mul
             
 
         elif opcode == '0x08':
@@ -171,6 +172,14 @@ class Simulator():
             pass
             # self.register_state[0]=opcode
 
+    def break_bytecodeline_fours(self,bytecode_lines):
+        for i in range(0,len(bytecode_lines)):
+            bytecode_lines[i] = bytecode_lines[i].strip()
+            halfbyte0 = bytecode_lines[i][0:4]
+            halfbyte1 = bytecode_lines[i][4:8]
+            halfbyte2 = bytecode_lines[i][8:12]
+            halfbyte3 = bytecode_lines[i][12:16]
+            bytecode_lines[i] = [halfbyte0,halfbyte1,halfbyte2,halfbyte3]
 
     def simulate(self,file):
         self.read_bytecode(file)
@@ -181,13 +190,9 @@ class Simulator():
         print(f" -| R1  |  R2  |  R3  |  PC  | COND ")
         print("___________________________________")
 
+        self.break_bytecodeline_fours(bytecode_lines)
+        
         for i in range(0,len(bytecode_lines)):
-            bytecode_lines[i] = bytecode_lines[i].strip()
-            halfbyte0 = bytecode_lines[i][0:4]
-            halfbyte1 = bytecode_lines[i][4:8]
-            halfbyte2 = bytecode_lines[i][8:12]
-            halfbyte3 = bytecode_lines[i][12:16]
-            bytecode_lines[i] = [halfbyte0,halfbyte1,halfbyte2,halfbyte3]
             self.process_bytecode_line(bytecode_lines[i],i)
 
             # print(self.bytecode_lines)

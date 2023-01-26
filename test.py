@@ -1,25 +1,39 @@
 import unittest
 import run
+from simulator import Simulator
+from pathlib import Path
+from assembler import update_line_information
+
+sim = Simulator(Path().resolve())
+sim.read_bytecode("compiled_test.s")
+update_line_information(sim.initial_temp_mem_location,sim.bytecode_lines,sim.bytecode_lines_info)
+sim.break_bytecodeline_fours(sim.bytecode_lines)
 
 class TestRun(unittest.TestCase):
     
     def test_extra_make_input_arguments(self):
         # testing extra input arguments for "make" command option
-        self.assertEqual(run.run(["run.py","make","filename.s","filename.obj","extra.p"]),"Too many arguments")
+        self.assertEqual(run.run(["run.py","make","filename.s","filename.obj","extra.p"],[]),"Too many arguments")
 
     def test_missing_make_input_arguments(self):
         # testing missing input arguments for "make" command option
-        self.assertEqual(run.run(["run.py","make","filename.s"]),"Missing argument")
+        self.assertEqual(run.run(["run.py","make","filename.s"],[]),"Missing argument")
 
     def test_extra_read_input_arguments(self):
         # testing extra input arguments for "read" command option
-        self.assertEqual(run.run(["run.py","read","filename.s","extra.txt"]),"Too many arguments")
+        self.assertEqual(run.run(["run.py","read","filename.s","extra.txt"],[]),"Too many arguments")
 
     def test_missing_read_input_arguments(self):
         # testing missing input arguments for "read" command option
-        self.assertEqual(run.run(["run.py","read"]),"Missing argument")
+        self.assertEqual(run.run(["run.py","read"],[]),"Missing argument")
 
     # missing file test
+
+    def test_instruction_mul(self):
+        res = sim.process_bytecode_line(sim.bytecode_lines[7],7)
+        self.assertEqual("0x"+f"{int(sim.bytecode_lines[7][0],2):02x}","0x07")
+        self.assertEqual(res,"0x00")
+        
 
     
 

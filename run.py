@@ -45,7 +45,7 @@ def run(cmd,args):
         # self.readLines(cmd[2])
         assembler_obj.readLines(cmd[2])
         assembler_obj.preprocess(assembler_obj.all_lines)
-        assembler_obj.compile(cmd[3],args.intermidiate)
+        assembler_obj.compile(cmd[3],args)
         # self.printLines(self.all_lines)
         return True
     
