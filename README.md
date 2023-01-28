@@ -1,10 +1,10 @@
-# ![GitHub](https://img.shields.io/github/license/Sammy-Barasa/project0-Assembler-and-Simulator) ![GitHub contributors](https://img.shields.io/github/contributors/Sammy-Barasa/project0-Assembler-and-Simulator)  [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/Sammy-Barasa/project0-Assembler-and-Simulator#how-to-contribute-)
+# ![GitHub](https://img.shields.io/github/license/Sammy-Barasa/project0-Assembler-and-Simulator) ![GitHub contributors](https://img.shields.io/github/contributors/Sammy-Barasa/project0-Assembler-and-Simulator)  [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/Sammy-Barasa/project0-Assembler-and-Simulator#how-to-contribute)
 
 ## project0-Assembler-and-Simulator
 
 # **project0 PesaPal Challange 2023**
 
-project0 is implementing an assembler following provided machine instruction set by PesaPal Careers Portal for Junior Developer . The project has two parts
+project0 is implementing an assembler following provided machine instruction set by PesaPal Careers Portal for Junior Developer . The project is implemented using standard python with minimal dependencie. The project has two parts
 
 ### **1. Assembler**
 
@@ -166,7 +166,7 @@ One of my fundamental learning material used for referencing and understanding t
 # How to contribute 
 
 
-Branch dev is always ahead. Reach out to me on my linked in so I can add your email a a contributer. See details on my profile.
+Branch dev is always ahead. Reach out to me on my linked in so I can add your email as a contributer. See details on my profile.
 
 1. Add an issue
 2. Clone the repo
@@ -218,6 +218,7 @@ then check out your branch
 ```sh
 git checkout your_name/isntruction_or_feature_working_on
 ```
+
 
 11. Add your contribution
 12. write your test
