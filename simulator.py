@@ -154,8 +154,21 @@ class Simulator():
             # self.register_state[0]=opcode
         
         elif opcode == '0x0B':
-            pass
-            # self.register_state[0]=opcode
+            # bne R1 R2 R3
+            op1 = code1
+            op2 = "0x"+f"{int(instructions[2],2):02x}"
+            op3 = "0x"+f"{int(instructions[3],2):02x}"
+            boolresult = int(op1, 16)==int(op2, 16)
+            # print(f"difference is {mul} at {self.registers_names[op1][0]}")
+            if boolresult is True:
+              self.register_state[4] = "0x01" # store true in cindition register
+            else:
+              self.register_state[4] = "0x00" # store false in conditional register
+
+            if self.register_state[4]== "0x01":
+                self.register_state[3] = op3  # change program counter register to memory location of R3
+            return {"result":boolresult,"PC":self.register_state[3]}
+
         
         elif opcode == '0x0C':
             self.register_state[0]=opcode
