@@ -164,6 +164,8 @@ class Utils:
 					
 		return result
 
+utils = Utils()
+
 class Assembler:
 	BASE_DIR = "" # base directory
 	all_lines=[]
@@ -375,7 +377,7 @@ class Assembler:
 		self.remove_commas(lines)
 		self.remove_spaces(lines)
 		
-		update_line_information(self.start_memory_location,lines,self.all_lines_info)
+		utils.update_line_information(self.start_memory_location,lines,self.all_lines_info)
 		
 		# self.replace_labels_to_start_addresses()
 		# third run: change instructions to hex, everything to 4 bytes
