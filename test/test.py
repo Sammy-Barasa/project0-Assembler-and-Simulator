@@ -32,7 +32,7 @@ class TestRun(unittest.TestCase):
 
     def test_instruction_mul(self):
         res = sim.process_bytecode_line(sim.bytecode_lines[6],6)
-        print(sim.register_state)
+        
         # self.assertEqual("0x"+f"{int(sim.bytecode_lines[6][0],2):02x}","0x07")
         # self.assertEqual(res,"0x00")
 
@@ -43,7 +43,7 @@ class TestRun(unittest.TestCase):
 
     def test_instruction_bne(self):
         res = sim.process_bytecode_line(sim.bytecode_lines[11],11)
-        self.assertEqual(res["result"],False)
+        self.assertEqual(res["result"],True)
         # self.assertEqual(res,"0x00")   
 
     def test_instruction_inc(self):
@@ -53,6 +53,12 @@ class TestRun(unittest.TestCase):
 
     def test_instruction_dec(self):
         res = sim.process_bytecode_line(sim.bytecode_lines[13],13)
+        # self.assertEqual(res["result"],False)
+        # self.assertEqual(res,"0x00") 
+
+    def test_instruction_jr(self):
+        res = sim.process_bytecode_line(sim.bytecode_lines[9],9)
+        print(sim.register_state)
         # self.assertEqual(res["result"],False)
         # self.assertEqual(res,"0x00") 
     

@@ -71,6 +71,8 @@ class Simulator():
             first = code1 # destination
             second = "0x"+f"{int(code2,2):02x}" # source
 
+            self.register_state[3]=memory_next_instr
+
             if self.registers_names[first][0]=="R1"  and self.registers_names[second][0]=="R2" :
                 self.register_state[0] = self.register_state[1]
             elif self.registers_names[first][0]=="R2"  and self.registers_names[second][0]=="R1":
@@ -90,6 +92,7 @@ class Simulator():
             memory_next_instr = self.bytecode_lines_info[str((j+1))]["start"]            
             first = code1 # destination
             second = "0x"+f"{int(code2,2):02x}" # source
+            self.register_state[3]=memory_next_instr
 
             if self.registers_names[first][0]=="R1"  and self.registers_names[second][0]=="R2" :
                 self.register_state[0] = self.register_state[1]
@@ -110,6 +113,8 @@ class Simulator():
             #      1  2  3
 
             memory_next_instr = self.bytecode_lines_info[str((j+1))]["start"]
+            self.register_state[3]=memory_next_instr
+
             op1 = code1
             op2 = "0x"+f"{int(instructions[2],2):02x}"
             op3 = "0x"+f"{int(instructions[3],2):02x}"
@@ -123,6 +128,8 @@ class Simulator():
             # 0110001000010011
             #      1  2  3
             memory_next_instr = self.bytecode_lines_info[str((j+1))]["start"]
+            self.register_state[3]=memory_next_instr
+
             op1 = code1
             op2 = "0x"+f"{int(instructions[2],2):02x}"
             op3 = "0x"+f"{int(instructions[3],2):02x}"
@@ -140,6 +147,8 @@ class Simulator():
             # 0111001000010000
 
             memory_next_instr = self.bytecode_lines_info[str((j+1))]["start"]
+            self.register_state[3]=memory_next_instr
+
             op1 = code1
             op2 = "0x"+f"{int(instructions[2],2):02x}"
             op3 = "0x"+f"{int(instructions[3],2):02x}"
@@ -151,15 +160,26 @@ class Simulator():
 
         elif opcode == '0x08':
             memory_next_instr = self.bytecode_lines_info[str((j+1))]["start"]
+            self.register_state[3]=memory_next_instr
             # self.register_state[0]=opcode
         
         elif opcode == '0x09':
-            pass
-            # self.register_state[0]=opcode
+            # j 0x00000000
+            memory_next_instr = self.bytecode_lines_info[str((j+1))]["start"]
+            self.register_state[3]=memory_next_instr
+
+            # mem_to_jump = code1 # register
+            # self.register_state[3] = mem_to_jump
+            # return self.register_state[3]
         
         elif opcode == '0x0a':
-            pass
-            # self.register_state[0]=opcode
+            # jr R1         
+            mem_to_jump_in_reg = code1 # register
+            if self.registers_names[mem_to_jump_in_reg][0]:
+                self.register_state[3] = self.register_state[self.registers_names[mem_to_jump_in_reg][1]]
+                return self.register_state[3]
+            
+            
         
         elif opcode == '0x0b':
             # beq R1 R2 R3

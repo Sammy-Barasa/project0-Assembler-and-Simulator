@@ -143,9 +143,9 @@ ___________________________________
  2|0x00 | 0xff | xxxx | 0x20 | xxxx
  3|0x00 | 0xff | 0x30 | 0x30 | xxxx
  4|0x00 | 0xff | 0x30 | 0x30 | xxxx
- 5|0x00 | 0xff | 0x30 | 0x30 | xxxx
- 6|0x00 | 0xff | 0x30 | 0x30 | xxxx
- 7|0x00 | 0xff | 0x30 | 0x50 | xxxx
+ 5|0x01 | 0xff | 0x30 | 0x30 | xxxx
+ 6|0x01 | 0xff | 0x30 | 0x02 | 0x01
+ 7|0x01 | 0xff | 0x30 | 0x50 | 0x01
 
 ```
 
@@ -165,17 +165,66 @@ One of my fundamental learning material used for referencing and understanding t
 
 # How to contribute 
 
+
+Branch dev is always ahead. Reach out to me on my linked in so I can add your email a a contributer.
+
 1. Add an issue
 2. Clone the repo
-3. change to branch dev
-4. create brach with name: "your_name/isntruction_or_part_you_are_working_on"
+
+```sh
+git clone link
+```
+
+3. switch to branch dev
+
+```sh
+git checkout dev
+```
+
+4. create brach with name: "your_name/isntruction_or_feature_working_on"
+
+```sh
+git branch your_name/isntruction_or_feature_working_on
+```
+
+then check out your branch
+
+```sh
+git checkout your_name/isntruction_or_feature_working_on
+```
+
 5. Add your contribution
 6. write your test
 7. Make sure the tests run
-8. Submit a pull request with the branch you created.
+
+```sh
+python3 -m unittest discover
+```
+
+8. Submit a pull request with the branch you created. Write a good commit message.
 9. If pull request accepted, I will merge to dev and finally merge dev to main
-10. If working on an existing branch, switch to dev, witch to that branch and create branch with name: "your_name/isntruction_or_part_you_are_working_on"
+10. If working on an existing branch, switch to dev, switch to that branch and create branch with name: "your_name/isntruction_or_part_you_are_working_on"
+
+```sh
+git checkout dev
+```
+
+```sh
+git branch your_name/isntruction_or_feature_working_on
+```
+
+then check out your branch
+
+```sh
+git checkout your_name/isntruction_or_feature_working_on
+```
+
 11. Add your contribution
 12. write your test
 13. Make sure the tests run
-14. Submit a pull request with the branch you created.
+
+```sh
+python3 -m unittest discover
+```
+
+14. Submit a pull request with the branch you created.  
