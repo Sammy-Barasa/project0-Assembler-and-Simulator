@@ -39,6 +39,7 @@ class Simulator():
         code3 = instructions[3]
         
         if opcode == '0x00':
+           
             start_memory = self.bytecode_lines_info[str((j-1))]["start"]
             self.register_state[3]=start_memory
 
@@ -47,6 +48,7 @@ class Simulator():
 
         elif opcode == '0x02':
             # li R1 0x00000000
+            
 
             memory_next_instr = self.bytecode_lines_info[str((j+1))]["start"] # memory address of next instruction
             code2_code3 = "0x"+f"{int(code2 + code3,2):02x}"
@@ -65,7 +67,7 @@ class Simulator():
             
         elif opcode == '0x03':
             # lw R1 R2
-     
+            memory_next_instr = self.bytecode_lines_info[str((j+1))]["start"]
             first = code1 # destination
             second = "0x"+f"{int(code2,2):02x}" # source
 
@@ -84,7 +86,8 @@ class Simulator():
         
         elif opcode == '0x04':
             # lw R1 R2
-                        
+
+            memory_next_instr = self.bytecode_lines_info[str((j+1))]["start"]            
             first = code1 # destination
             second = "0x"+f"{int(code2,2):02x}" # source
 
@@ -105,6 +108,8 @@ class Simulator():
             # add R3 R1 R2
             # 0101001000010000
             #      1  2  3
+
+            memory_next_instr = self.bytecode_lines_info[str((j+1))]["start"]
             op1 = code1
             op2 = "0x"+f"{int(instructions[2],2):02x}"
             op3 = "0x"+f"{int(instructions[3],2):02x}"
@@ -117,6 +122,7 @@ class Simulator():
             # 0110001000010000
             # 0110001000010011
             #      1  2  3
+            memory_next_instr = self.bytecode_lines_info[str((j+1))]["start"]
             op1 = code1
             op2 = "0x"+f"{int(instructions[2],2):02x}"
             op3 = "0x"+f"{int(instructions[3],2):02x}"
@@ -132,6 +138,8 @@ class Simulator():
         elif opcode == '0x07':
             # mult R3 R1 R2
             # 0111001000010000
+
+            memory_next_instr = self.bytecode_lines_info[str((j+1))]["start"]
             op1 = code1
             op2 = "0x"+f"{int(instructions[2],2):02x}"
             op3 = "0x"+f"{int(instructions[3],2):02x}"
@@ -142,19 +150,19 @@ class Simulator():
             
 
         elif opcode == '0x08':
-            pass
+            memory_next_instr = self.bytecode_lines_info[str((j+1))]["start"]
             # self.register_state[0]=opcode
         
         elif opcode == '0x09':
             pass
             # self.register_state[0]=opcode
         
-        elif opcode == '0x0A':
+        elif opcode == '0x0a':
             pass
             # self.register_state[0]=opcode
         
-        elif opcode == '0x0B':
-            # bne R1 R2 R3
+        elif opcode == '0x0b':
+            # beq R1 R2 R3
             op1 = code1
             op2 = "0x"+f"{int(instructions[2],2):02x}"
             op3 = "0x"+f"{int(instructions[3],2):02x}"
@@ -170,10 +178,25 @@ class Simulator():
             return {"result":boolresult,"PC":self.register_state[3]}
 
         
-        elif opcode == '0x0C':
-            self.register_state[0]=opcode
+        elif opcode == '0x0c':
+            # bne R1 R2 R3
+            
+            op1 = code1
+            op2 = "0x"+f"{int(instructions[2],2):02x}"
+            op3 = "0x"+f"{int(instructions[3],2):02x}"
+            boolresult = int(op1, 16)!=int(op2, 16)
+            # print(f"difference is {mul} at {self.registers_names[op1][0]}")
+            if boolresult is True:
+              self.register_state[4] = "0x01" # store true in cindition register
+            else:
+              self.register_state[4] = "0x00" # store false in conditional register
 
-        elif opcode == '0x0D':
+            if self.register_state[4]== "0x01":
+                self.register_state[3] = op3  # change program counter register to memory location of R3
+            return {"result":boolresult,"PC":self.register_state[3]}
+
+        elif opcode == '0x0d':
+            
             pass
             # self.register_state[0]=opcode
 

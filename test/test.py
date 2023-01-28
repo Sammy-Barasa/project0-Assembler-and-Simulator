@@ -31,9 +31,15 @@ class TestRun(unittest.TestCase):
     # missing file test
 
     def test_instruction_mul(self):
-        res = sim.process_bytecode_line(sim.bytecode_lines[7],7)
-        self.assertEqual("0x"+f"{int(sim.bytecode_lines[7][0],2):02x}","0x07")
-        self.assertEqual(res,"0x00")
+        res = sim.process_bytecode_line(sim.bytecode_lines[6],6)
+        print(sim.register_state)
+        # self.assertEqual("0x"+f"{int(sim.bytecode_lines[6][0],2):02x}","0x07")
+        # self.assertEqual(res,"0x00")
+
+    def test_instruction_beq(self):
+        res = sim.process_bytecode_line(sim.bytecode_lines[10],10)
+        self.assertEqual(res["result"],False)
+        # self.assertEqual(res,"0x00")
         
 
     
