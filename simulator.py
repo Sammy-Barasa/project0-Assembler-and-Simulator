@@ -198,7 +198,7 @@ class Simulator():
         elif opcode == '0x0d':
             # inc R1
             memory_next_instr = self.bytecode_lines_info[str((j+1))]["start"]            
-            first = code1 # destination
+            first = code1 # register
 
             if self.registers_names[first][0]=="R1":
                 inc_result = "0x"+f"{int(first, 16)+1:02x}"
@@ -215,8 +215,22 @@ class Simulator():
 
 
         elif opcode == '0x0E':
-            pass
-            # self.register_state[0]=opcode
+            # inc R1
+            memory_next_instr = self.bytecode_lines_info[str((j+1))]["start"]            
+            first = code1 # register
+
+            if self.registers_names[first][0]=="R1":
+                dec_result = "0x"+f"{int(first, 16)-1:02x}"
+                self.register_state[0] = dec_result
+                return dec_result
+            elif self.registers_names[first][0]=="R2":
+                dec_result = "0x"+f"{int(first, 16)-1:02x}"
+                self.register_state[1] = dec_result
+                return dec_result
+            elif self.registers_names[first][0]=="R3":
+                dec_result = "0x"+f"{int(first, 16)-1:02x}"
+                self.register_state[2] = dec_result
+                return dec_result
 
 
     def break_bytecodeline_fours(self,bytecode_lines):
