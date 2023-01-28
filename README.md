@@ -166,7 +166,7 @@ One of my fundamental learning material used for referencing and understanding t
 # How to contribute 
 
 
-Branch dev is always ahead. Reach out to me on my linked in so I can add your email a a contributer.
+Branch dev is always ahead. Reach out to me on my linked in so I can add your email a a contributer. See details on my profile.
 
 1. Add an issue
 2. Clone the repo
