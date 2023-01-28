@@ -61,7 +61,12 @@ class TestRun(unittest.TestCase):
         print(sim.register_state)
         # self.assertEqual(res["result"],False)
         # self.assertEqual(res,"0x00") 
-    
+
+    def test_instruction_j(self):
+        res = sim.process_bytecode_line(sim.bytecode_lines[9],9)
+        print(sim.register_state)
+        # self.assertEqual(res["result"],False)
+        # self.assertEqual(res,"0x00") 
 
 if __name__ == "__main__":
     unittest.main()

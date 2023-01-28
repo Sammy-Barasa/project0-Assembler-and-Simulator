@@ -165,12 +165,10 @@ class Simulator():
         
         elif opcode == '0x09':
             # j 0x00000000
-            memory_next_instr = self.bytecode_lines_info[str((j+1))]["start"]
-            self.register_state[3]=memory_next_instr
-
-            # mem_to_jump = code1 # register
-            # self.register_state[3] = mem_to_jump
-            # return self.register_state[3]
+            
+            mem_to_jump = code1 # memory location
+            self.register_state[3] = mem_to_jump
+            return self.register_state[3]
         
         elif opcode == '0x0a':
             # jr R1         
