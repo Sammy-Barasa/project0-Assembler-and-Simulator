@@ -40,7 +40,11 @@ class TestRun(unittest.TestCase):
         res = sim.process_bytecode_line(sim.bytecode_lines[10],10)
         self.assertEqual(res["result"],False)
         # self.assertEqual(res,"0x00")
-        
+
+    def test_instruction_bne(self):
+        res = sim.process_bytecode_line(sim.bytecode_lines[11],11)
+        self.assertEqual(res["result"],False)
+        # self.assertEqual(res,"0x00")   
 
     
 
