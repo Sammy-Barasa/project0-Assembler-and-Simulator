@@ -167,6 +167,15 @@ One of my fundamental learning material used for referencing and understanding t
 
 1. Add an issue
 2. Clone the repo
-3. Add your contribution
-4. Make sure the tests run
-5. Submit a pull request
+3. change to branch dev
+4. create brach with name: "your_name/isntruction_or_part_you_are_working_on"
+5. Add your contribution
+6. write your test
+7. Make sure the tests run
+8. Submit a pull request with the branch you created.
+9. If pull request accepted, I will merge to dev and finally merge dev to main
+10. If working on an existing branch, switch to dev, witch to that branch and create branch with name: "your_name/isntruction_or_part_you_are_working_on"
+11. Add your contribution
+12. write your test
+13. Make sure the tests run
+14. Submit a pull request with the branch you created.
