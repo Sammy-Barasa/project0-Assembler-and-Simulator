@@ -2,12 +2,12 @@ import unittest
 import run
 from simulator import Simulator
 from pathlib import Path
-from assembler import update_line_information
+from assembler import Utils
 
-
+utils = Utils()
 sim = Simulator(Path().resolve())
 sim.read_bytecode("test/compiled_test.s")
-update_line_information(sim.initial_temp_mem_location,sim.bytecode_lines,sim.bytecode_lines_info)
+utils.update_line_information(sim.initial_temp_mem_location,sim.bytecode_lines,sim.bytecode_lines_info)
 sim.break_bytecodeline_fours(sim.bytecode_lines)
 
 class TestRun(unittest.TestCase):
@@ -32,6 +32,12 @@ class TestRun(unittest.TestCase):
 
     def test_instruction_mul(self):
         res = sim.process_bytecode_line(sim.bytecode_lines[6],6)
+        
+        # self.assertEqual("0x"+f"{int(sim.bytecode_lines[6][0],2):02x}","0x07")
+        # self.assertEqual(res,"0x00")
+
+    def test_instruction_div(self):
+        sim.process_bytecode_line(sim.bytecode_lines[7],7)
         
         # self.assertEqual("0x"+f"{int(sim.bytecode_lines[6][0],2):02x}","0x07")
         # self.assertEqual(res,"0x00")

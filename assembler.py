@@ -2,25 +2,167 @@
 import os
 import re
 
+class Utils:
+	def update_line_information(self,start_memory_location,lines,hold_line_info):
+			# update line info: {"0":[start_addres,end_address]}
+			start_addr = start_memory_location
+			end_addr = 0
+			# lines_to_ignnore = list(self.preprocessor_commands.values())
 
-def update_line_information(start_memory_location,lines,hold_line_info):
-		# update line info: {"0":[start_addres,end_address]}
-		start_addr = start_memory_location
-		end_addr = 0
-		# lines_to_ignnore = list(self.preprocessor_commands.values())
+			# not_updated = True
+			
+			# while not_updated:
+			for i in range(0,len(lines)):
+				# to help track the new lines being modified
 
-		# not_updated = True
+				end_addr = start_addr+15
+				info = {"start":"0x"+f"{start_addr:02x}", "end":"0x"+f"{end_addr:02x}"}
+				hold_line_info[str(i)]= info
+				start_addr=end_addr+1
+			
+				# not_updated = False
+	
+	def to_binary(self,d):
+		b = ''
+		while True:
+			if d == 0:
+				break
+			elif (d % 2) == 0:
+				d = d // 2
+				b = '0' + b
+			else:
+				d = d // 2
+				b = '1' + b
+		return b
+
+	def from_binary(self,binary):
+		binary = binary[::-1]
+		d = 0
+		power = 0 
+		for i in binary:
+			d += int(i) * (2 ** power)
+			power +=1 
+		return d 
+	
+	def addition(self,a, b):
+		max_len = max(len(a), len(b))
+
+		a = a.zfill(max_len)
+		b = b.zfill(max_len)
+
+		result = ''    
+		temp = 0
+
+		for i in range(max_len - 1, - 1, - 1):
+			num = int(a[i]) + int(b[i]) + temp
+			print(num)
+
+			if num % 2 == 0:
+				result = '0' + result
+			else:
+				result = '1' + result
+
+			if num == 2:
+				temp = 1
+			else:
+				temp = 0
 		
-		# while not_updated:
-		for i in range(0,len(lines)):
-			# to help track the new lines being modified
-
-			end_addr = start_addr+15
-			info = {"start":"0x"+f"{start_addr:02x}", "end":"0x"+f"{end_addr:02x}"}
-			hold_line_info[str(i)]= info
-			start_addr=end_addr+1
+		if temp !=0: 
+			result = '01' + result
 		
-			# not_updated = False
+		if int(result) == 0:
+			result = 0
+
+		return result
+
+	def subtraction(self,a, b):
+		max_len = max(len(a), len(b))
+
+		a = a.zfill(max_len)
+		b = b.zfill(max_len)
+
+		result = ''    
+		temp = 0
+
+		for i in range(max_len - 1, - 1, - 1):
+			num = int(a[i]) - int(b[i]) - temp
+			if num % 2 == 1:
+				result = '1' + result
+			else:
+				result = '0' + result
+
+			if num < 0:
+				temp = 1
+			else:
+				temp = 0
+		
+		if temp !=0: 
+			result = '01' + result
+		
+		if int(result) == 0:
+			result = 0
+
+		return result
+
+	def multiplication(self,a, b):
+		max_len = max(len(a), len(b))
+		min_len = min(len(a), len(b))
+
+		result = ''
+		temp_result = ''
+
+		temp = []
+		zeroes = 0
+		temp_index = 0
+
+		for j in range(min_len - 1, - 1, - 1):
+			
+			temp_result = ''
+			for i in range(max_len - 1, - 1, - 1):
+				summ = int(a[i]) * int(b[j])
+				if summ == 0:
+					temp_result = '0' + temp_result
+				elif summ == 1:
+					temp_result = '1' + temp_result
+			temp_result = temp_result + ('0' * zeroes)
+			zeroes += 1
+			
+			temp.append(temp_result)
+
+			if len(temp) == 2:
+				result = self.addition(str(temp[0]), str(temp[1]))
+			elif len(temp) > 2:
+				temp_index = len(temp)
+				temp_index += 1
+				result = self.addition(str(result), str(temp[temp_index - 2]))
+			else:
+				pass
+		return result
+
+
+	def division(self,a, b):
+		result = ''
+		temp = '0'
+		r = 0
+
+		for i in range(len(a)):        
+			if int(b) > int(temp):
+				result += '0'
+				temp += a[i]
+			else:
+				r = self.sunstraction(temp, b)
+				if r == 0:
+					temp = a[i]
+					result += '1'
+				else:
+					r = str(r).lstrip('0')
+					result += '1'
+					temp = r + a[i]
+		
+		if temp !=int(0): 
+			result = result + '0' 
+					
+		return result
 
 class Assembler:
 	BASE_DIR = "" # base directory

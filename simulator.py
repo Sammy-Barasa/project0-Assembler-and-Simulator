@@ -1,5 +1,7 @@
 import os
-from assembler import update_line_information
+from assembler import Utils
+
+utils = Utils()
 class Simulator():
     BASE_DIR = ""
     registers_names = {'0x00':['R1',0],'0x01':['R2',1],'0x02':['R3',2],'0x03':['PC',3],'0x04':['COND',0]} # registers
@@ -159,10 +161,26 @@ class Simulator():
             
 
         elif opcode == '0x08':
+            # div R3 R1 R2
+            # Divide R1 by R2 and store the result in R3
+
             memory_next_instr = self.bytecode_lines_info[str((j+1))]["start"]
             self.register_state[3]=memory_next_instr
             # self.register_state[0]=opcode
-        
+            
+            store_to = code1
+            div1 = int(instructions[2],2)
+            div2 = int(instructions[3],2)
+            # print("from div:")
+            # print(div1)
+            # print(div2)
+            # print(store_to)
+            ab = utils.to_binary(div1)
+            bb = utils.to_binary(div2)
+            r = utils.division(ab, bb)
+            self.register_state[self.registers_names[store_to][1]] = "0x"+f"{int(r,2):02x}"
+
+
         elif opcode == '0x09':
             # j 0x00000000
             
@@ -262,7 +280,7 @@ class Simulator():
 
     def simulate(self,file):
         self.read_bytecode(file)
-        update_line_information(self.initial_temp_mem_location,self.bytecode_lines,self.bytecode_lines_info)
+        utils.update_line_information(self.initial_temp_mem_location,self.bytecode_lines,self.bytecode_lines_info)
         bytecode_lines=self.bytecode_lines
 
         print("___________________________________")
