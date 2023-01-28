@@ -46,6 +46,11 @@ class TestRun(unittest.TestCase):
         self.assertEqual(res["result"],False)
         # self.assertEqual(res,"0x00")   
 
+    def test_instruction_inc(self):
+        res = sim.process_bytecode_line(sim.bytecode_lines[12],12)
+        # self.assertEqual(res["result"],False)
+        # self.assertEqual(res,"0x00")  
+
     
 
 if __name__ == "__main__":
