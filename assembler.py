@@ -164,7 +164,39 @@ class Utils:
 					
 		return result
 
+
+
+class MemoryUnitSim:
+	'''
+	Simulates the memory unit for storage
+	'''
+	mem_unit = []
+	mem_unit_inst_start = 1664
+
+	def __init__(self,rows= 2048, columns=32):
+		self.bits = columns
+		self.rows = rows
+		self.mem_unit = [['x' for i in range(columns)] for i in range(rows)]
+	
+	def show_memory(self):
+		# print memory state
+		for i in range(self.rows):
+			# print(self.mem_unit[i])
+			compressed = "".join(self.mem_unit[i])
+			self.mem_unit[i] = compressed
+			print(f"{hex(i)} {compressed}")
+
+	def mem_store(self,destination):
+		# store in memory
+		pass
+
+	def mem_read(self,start,endbits):
+		# read from memory
+		pass
+
 utils = Utils()
+mem = MemoryUnitSim()
+mem.show_memory()
 
 class Assembler:
 	BASE_DIR = "" # base directory
