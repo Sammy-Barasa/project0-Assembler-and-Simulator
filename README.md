@@ -4,7 +4,9 @@
 
 # **project0 PesaPal Challange 2023**
 
-project0 is implementing an assembler following provided machine instruction set by PesaPal Careers Portal for Junior Developer . The project is implemented using standard python with minimal dependencie. The project has two parts
+project0 is implementing an assembler following provided machine instruction set by PesaPal Careers Portal for Junior Developer . The project is implemented using standard python with minimal dependencie. [see here](https://campusbiz.co.ke/careers/vacancy/junior-developers-pesapal-621933/)
+   
+The project has two parts
 
 ### **1. Assembler**
 
