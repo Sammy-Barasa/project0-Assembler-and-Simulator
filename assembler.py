@@ -170,33 +170,60 @@ class MemoryUnitSim:
 	'''
 	Simulates the memory unit for storage
 	'''
+	bits = None
+	rows = None
 	mem_unit = []
-	mem_unit_inst_start = 1664
+	mem_unit_inst_start = 1664 # '0xd000'
+	mem_unit_map = {}
 
 	def __init__(self,rows= 2048, columns=32):
 		self.bits = columns
 		self.rows = rows
 		self.mem_unit = [['x' for i in range(columns)] for i in range(rows)]
 	
+	def map_memory(self):
+		# print memory state
+		last_line_total_bits = 0
+		key_to_next_line = 0
+		for i in range(self.rows):
+			# print(self.mem_unit[i])
+			# compressed = "".join(self.mem_unit[i])
+			# self.mem_unit[i] = compressed
+			# compressed = self.mem_unit[i]
+			# print(key_to_next_line)
+			self.mem_unit_map[f"{hex(key_to_next_line)}"] = {"index":i,"start":f"{hex(key_to_next_line)}","end":f"{hex(key_to_next_line+31)}"}
+			last_line_total_bits = key_to_next_line + 31
+			key_to_next_line = last_line_total_bits + 1
+		
+		# print(self.mem_unit_map)
+
 	def show_memory(self):
 		# print memory state
 		for i in range(self.rows):
 			# print(self.mem_unit[i])
 			compressed = "".join(self.mem_unit[i])
-			self.mem_unit[i] = compressed
-			print(f"{hex(i)} {compressed}")
+			# compressed = self.mem_unit[i]
+			# self.mem_unit[i] = compressed
+			# self.mem_unit_map[hex(last_line_total_bits+bits_to_next_line)] = i
+			end_key ="end"
+			print(f"{self.mem_unit_map[hex(i*32)][end_key]}: {compressed}")
+			
+		
+	def mem_store_instruction(self,information,destination,bit_range):
+		# store in memory, return location
+		# print(information)
+		# print(self.mem_unit[destination][bit_range[0]:bit_range[1]])
+		self.mem_unit[destination][bit_range[0]:] = information
+		# print(self.mem_unit[destination][0:31])
+		self.mem_unit[destination] = self.mem_unit[destination][0:32]
+		return {"location":destination,"bit_range":bit_range}
 
-	def mem_store(self,destination):
-		# store in memory
-		pass
-
-	def mem_read(self,start,endbits):
+	def mem_read(self,destination,bit_range):
 		# read from memory
 		pass
 
 utils = Utils()
-mem = MemoryUnitSim()
-mem.show_memory()
+
 
 class Assembler:
 	BASE_DIR = "" # base directory
@@ -228,9 +255,11 @@ class Assembler:
 	} # operation code table
 	compiled_lines =[]
 	register_names = {'R1':'0x00','R2':'0x01','R3':'0x02','PC':'0x03','COND':'0x04'}
+	app_memory_obj =None
 
-	def __init__(self,base_dir):
+	def __init__(self,base_dir,mem):
 		self.BASE_DIR =base_dir
+		self.app_memory_obj = mem
 		
 		
 	def readLines(self,file):

@@ -5,13 +5,15 @@ utils = Utils()
 class Simulator():
     BASE_DIR = ""
     registers_names = {'0x00':['R1',0],'0x01':['R2',1],'0x02':['R3',2],'0x03':['PC',3],'0x04':['COND',0]} # registers
-    register_state = ["xxxx","xxxx","xxxx","xxxx","xxxx","xxxx"] # [[opcode][R1][R2][R3][PC][COND]
+    register_state = ["xxxx","xxxx","xxxx","xxxx","xxxx","xxxx"] # [[opcode][R1][R2][R3][PC][COND]]
     file_name = ""
     bytecode_lines =[]
     bytecode_lines_info={}
     initial_temp_mem_location = 0
-    def __init__(self,base_dir) -> None:
+    app_memory_obj = None
+    def __init__(self,base_dir,mem) -> None:
         self.BASE_DIR = base_dir
+        self.app_memory_obj = mem
 
 
     def read_bytecode(self,file):
@@ -44,6 +46,7 @@ class Simulator():
            
             start_memory = self.bytecode_lines_info[str((j-1))]["start"]
             self.register_state[3]=start_memory
+            
 
         elif opcode == '0x01':
             pass # do nothing
@@ -279,10 +282,22 @@ class Simulator():
             bytecode_lines[i] = [halfbyte0,halfbyte1,halfbyte2,halfbyte3]
 
     def simulate(self,file):
+        # readfile
+        
         self.read_bytecode(file)
         utils.update_line_information(self.initial_temp_mem_location,self.bytecode_lines,self.bytecode_lines_info)
         bytecode_lines=self.bytecode_lines
 
+        # store bits in memory
+        for i in range(0,len(bytecode_lines)):
+            # print(i)
+            information = bytecode_lines[i]
+            bit_range = (16,31)
+            destination = 1664 + i
+            self.app_memory_obj.mem_store_instruction(information,destination,bit_range)
+
+        self.app_memory_obj.show_memory()
+        self.register_state[3]= hex(1664*32)
         print("___________________________________")
         print(f" -| R1  |  R2  |  R3  |  PC  | COND ")
         print("___________________________________")
@@ -297,3 +312,9 @@ class Simulator():
             state = f" {i+1}|{self.register_state[0]} | {self.register_state[1]} | {self.register_state[2]} | {self.register_state[3]} | {self.register_state[4]}"
             print(state)
             state = f""
+
+        # with while loop read from starting instruction memory
+        # execute
+        # read program counter of next memory instruction location
+        # next iteration read from memory location the next instruction
+        # repeat

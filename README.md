@@ -127,11 +127,23 @@ Byte code file is generated in 16 word binary and is shown below:
 
 ### **3. Run simulator to prosses byte code or obj file**
 
+To run the simulator use:
+```sh
+python3 run.py sim compiled.s
+```
+
 The register table is displayed showing the register data after every line is executed. The registers value begin empty with value `xxxx` and are updated as each line is executed
 
-Out of the 16 instructions, only the first 7 have been implemented.
+Out of the 16 instructions, only the first 16 have been implemented.
 
-**Completed instruction: 7/16**
+
+**Completed instruction: 16/16**
+
+The byte file code is read and stored in memory from the memory ***`0xcfff`*** upto the end. The memory map can be seen below
+
+![memory map](image0.png)
+
+The simulator then reads the program counter register to know location of next memory of the next instruction, fetches and then executes. The memory map and the register table are then displayed.
 
 The register table looks as shown below:
 
@@ -148,6 +160,8 @@ ___________________________________
  7|0x01 | 0xff | 0x30 | 0x50 | 0x01
 
 ```
+
+
 
 # Credits
 

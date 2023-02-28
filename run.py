@@ -1,6 +1,6 @@
 import sys
 from pathlib import Path
-from assembler import Assembler
+from assembler import Assembler, MemoryUnitSim
 from simulator import Simulator
 
 import argparse
@@ -14,8 +14,11 @@ parser.add_argument('program_action',nargs="*", help='argument for selecting eit
 
 def run(cmd,args):
     base_dir = Path().resolve()
-    assembler_obj = Assembler(base_dir) # assembler object
-    simulator_obj = Simulator(base_dir)
+    mem = MemoryUnitSim()
+    mem.map_memory()
+    # mem.show_memory()
+    assembler_obj = Assembler(base_dir,mem) # assembler object
+    simulator_obj = Simulator(base_dir,mem)
     # compile_assembly.startProgram()
 
 
